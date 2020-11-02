@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="jdbc.properties"></properties>
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 打开延迟加载的开关 -->
+        <!--<setting name="lazyLoadingEnabled" value="true"/>-->
+        <!-- 将积极加载改为消极加载，即延迟加载 -->
+        <!--<setting name="aggressiveLazyLoading" value="false"/>-->
+
+    </settings>
+
+    <typeAliases>
+        <!--  <typeAlias type="com.yg.myBatis.pojo.Employee" alias="emp"/> -->
+        <package name="com.yg.myBatis.pojo"></package>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/projectdemo"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123."/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="EmployeeMapper.xml"/>
+    </mappers>
+</configuration>

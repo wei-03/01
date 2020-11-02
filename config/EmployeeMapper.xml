@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yg.myBatis.dao.EmployeeMapper">
+	<!-- <select id="selectEmp" resultType="com.yg.myBatis.pojo.Employee"> -->
+	<!--查询 -->
+	<!-- <select id="getEmpById" resultType="com.yg.myBatis.pojo.Employee"> -->
+	<select id="getEmpByMap" resultType="com.yg.myBatis.pojo.Employee" databaseId="mysql">
+		select * from t_employee where id = #{id}    <!--id,last_name lastName,email,gender  -->
+	</select>
+	<select id="getEmpByIdAndLastName" resultType="com.yg.myBatis.pojo.Employee" databaseId="mysql"> 
+		<!-- select * from t_employee where id = #{arg0} and last_name=#{lastName} -->    <!--id,last_name lastName,email,gender  -->
+	    select * from ${t_emp} where id = #{id} and last_name=#{lastName}
+	</select>
+	
+	<!--插入  useGeneratedKeys设置自增键-->
+	<insert id="addEmp" useGeneratedKeys="true" keyProperty="id" databaseId="mysql">
+	  insert into t_employee(last_name,gender,email)
+	  value(#{lastName},#{gender},#{email})
+	</insert>
+	
+	<!--插入 orcale  -->
+	<insert id="addEmp" databaseId="orcale">
+	  <!--查询主键ID 并封装给JavaBean的属性  BEFORE:之前运行  -->
+	  <selectKey keyProperty="id" order="BEFORE">
+	    <!-- SELECT crm_seq.nextval FROM dual -->
+	    select EMPLOYEES_SQL.nextval from dual
+	  </selectKey>
+	  <!--编写主键sql语句  -->
+	  insert into t_employee(id,last_name,gender,email)
+	  value(#{id},#{lastName},#{gender},#{email})
+	</insert>
+	
+	<!--更新  -->
+	<update id="updateEmp">
+	  update t_employee set last_name=#{lastName},gender=#{gender},email=#{email}
+	  where id=#{id}
+	</update>
+	
+	<!--删除 -->
+	<delete id="deleteEmp">
+	  delete from t_employee
+	  where id=#{id}
+	</delete>
+</mapper>
